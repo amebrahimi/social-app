@@ -8,6 +8,7 @@
 * body-parser
 * bcryptjs
 * validator
+* gravatar
 
 ## Dev Dependencies
 
