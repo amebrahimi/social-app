@@ -9,6 +9,7 @@
 * bcryptjs
 * validator
 * gravatar
+* concurrently
 
 ## Dev Dependencies
 
