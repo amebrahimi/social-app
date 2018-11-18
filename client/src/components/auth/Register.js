@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import axios from "axios";
 import classnames from "classnames";
+import {withRouter} from "react-router-dom";
+
 import {connect} from "react-redux";
 import {registerUser} from "../../actions/authActions";
 import PropTypes from 'prop-types';
@@ -23,6 +24,12 @@ class Register extends Component {
         this.setState({[e.target.name]: e.target.value});
     };
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({errors: nextProps.errors});
+        }
+    }
+
     onSubmit = e => {
         e.preventDefault();
 
@@ -33,18 +40,12 @@ class Register extends Component {
             password2: this.state.password2
         };
 
-        this.props.registerUser(newUser);
-
-        // axios.post('/api/users/register', newUser)
-        //     .then(result => console.table(result.data))
-        //     .catch(err => this.setState({errors: err.response.data}));
+        this.props.registerUser(newUser, this.props.history);
     };
 
     render() {
 
         const {errors} = this.state;
-
-        const {user} = this.props.auth;
 
         return (
             <div className="register">
@@ -95,7 +96,7 @@ class Register extends Component {
                                 <div className="form-group">
                                     <input type="password"
                                            className={classnames("form-control form-control-lg", {
-                                               'is-invalid': errors.password
+                                               'is-invalid': errors.password2
                                            })}
                                            placeholder="Confirm Password"
                                            value={this.state.password2}
@@ -115,14 +116,16 @@ class Register extends Component {
 
 Register.propTypes = {
     registerUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
 };
 
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    errors: state.errors
 });
 
 export default connect(mapStateToProps, {
     registerUser
-})(Register);
+})(withRouter(Register));
