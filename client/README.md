@@ -6,3 +6,4 @@
 * redux
 * react-redux
 * redux-thunk // Middle ware
+* jwt-decode // Extract the user from token
