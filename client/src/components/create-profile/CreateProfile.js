@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import connect from "react-redux/es/connect/connect";
 import PropTypes from 'prop-types';
+import {withRouter} from "react-router-dom";
+
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import InputGroup from "../common/InputGroup";
+import {createProfile} from "../../actions/profileActions";
 
 
 class CreateProfile extends Component {
@@ -32,6 +35,12 @@ class CreateProfile extends Component {
 
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({errors: nextProps.errors})
+        }
+    }
+
     onChange = e => {
         this.setState({[e.target.name]: e.target.value})
     };
@@ -40,7 +49,23 @@ class CreateProfile extends Component {
     onSubmit = e => {
         e.preventDefault();
 
-        console.log('submit');
+        const profileData = {
+            handle: this.state.handle,
+            company: this.state.company,
+            website: this.state.website,
+            location: this.state.location,
+            status: this.state.status,
+            skills: this.state.skills,
+            githubusername: this.state.githubusername,
+            bio: this.state.bio,
+            twitter: this.state.twitter,
+            facebook: this.state.facebook,
+            linkedin: this.state.linkedin,
+            youtube: this.state.youtube,
+            instagram: this.state.instagram
+        };
+
+        this.props.createProfile(profileData, this.props.history);
     };
 
 
@@ -218,4 +243,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps)(CreateProfile);
+export default connect(mapStateToProps, {createProfile})(withRouter(CreateProfile));
