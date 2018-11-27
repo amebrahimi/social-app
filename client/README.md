@@ -7,3 +7,5 @@
 * react-redux
 * redux-thunk // Middle ware
 * jwt-decode // Extract the user from token
+* moment // Need to to work with react-moment
+* react-moment // For formatting dates in react
