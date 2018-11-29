@@ -1,10 +1,8 @@
-import index from "./client/src/reducers";
-
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const path = require(path);
+const path = require('path');
 
 const users = require('./routs/api/users');
 const profile = require('./routs/api/profile');
